@@ -5,17 +5,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Code Quiz</title>
         <link rel="stylesheet" type="text/css" href="./assets/styles/reset.css" />
-        <link rel="stylesheet" type="text/css" href="./assets/styles/style.css" />
+        <link rel="stylesheet" type="text/css" href="./assets/styles/main.css" />
     </head>
     <body>
+        <header>
+            <a id="hsLink" href="./assets/highScorePage.html">View High Scores</a>
+            <h4 id="timer">Time: <span id="time"></span></h4>
+        </header>
 
 <!--         PseudoCode:
-        1) all pages (except high score page)
+        1) main page
             a) View High Scores
             b) Timer
             header containing high score link and timer (hide on highscore page)
 
-        2) start page
+        2) start
             All centered:
             h1 element: code quiz challenge
             p element: quiz description
@@ -25,7 +29,7 @@
                     reveal 1st question container
                     initiate timer
 
-        3) questions pages
+        3) questions
             Left justified in container:
             h2 element: question
             list: answer buttons
@@ -36,7 +40,7 @@
                     adjust timer if incorrect
                     p element: display correct or incorrect
 
-        4) end page
+        4) end
             Left justified in container:
             h2 element: quiz over message
             p element: display score = time remaining
@@ -52,6 +56,7 @@
             list element: initials + score
             return to home button
                 when clicked:
+                    reset timer
                     return to start page
             clear scores button
                 when clicked:
@@ -59,6 +64,6 @@
 
         bonus: multiple question types: true/false and multiple choice -->
 
-        <script src="./assets/script.js"></script>
+        <script src="./assets/scripts/main.js"></script>
     </body>
 </html>

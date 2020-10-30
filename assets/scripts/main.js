@@ -41,6 +41,7 @@
     list element: initials + score
     return to home button
         when clicked:
+            reset timer to 0
             return to start page
     clear scores button
         when clicked:
