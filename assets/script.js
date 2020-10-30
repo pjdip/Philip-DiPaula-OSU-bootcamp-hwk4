@@ -1,43 +1,30 @@
-/* PseudoCode:
-1) all pages (except high score page)
-    a) View High Scores
-    b) Timer
-    header containing high score link and timer (hide on highscore page)
+/* 
 
-2) start page
-    All centered:
-    h1 element: code quiz challenge
-    p element: quiz description
-    button: start quiz
-        when clicked:
-            hide start container
-            reveal 1st question container
-            initiate timer
+countdown timer
+    starts at given time
+    counts down
+    deduct 10 seconds on wrong answer
+    send user to end page when hit 0
 
-3) questions pages
-    Left justified in container:
-    h2 element: question
-    list: answer buttons
-        when clicked:
-            hide question
-            reveal next question/end
-            tally score
-            adjust timer if incorrect
-            p element: display correct or incorrect
+start button
+    hide start container
+    reveal 1st question container
+    initiate timer
 
-4) end page
-    Left justified in container:
-    h2 element: quiz over message
-    p element: display score = time remaining
-    input element: enter initials box
-    submit button:
-        when clicked:
-            store initials
-            append to high score list
-            switch to high score page
+answer buttons
+    hide question
+    reveal next question/end
+    adjust timer if incorrect
+    p element: display correct or incorrect for 3 seconds
+
+display score
+
+submit button
+    store initials
+    append to high score list
+    switch to high score page
 
 5) high schore page
-    h2 element: "high scores"
     list element: initials + score
     return to home button
         when clicked:
@@ -48,3 +35,26 @@
             clear high score list
 
 bonus: multiple question types: true/false and multiple choice */
+
+var returnBtn = document.getElementById("return");
+returnBtn.addEventListener("click", function() {
+    window.location.href='https://pjdip.github.io/Philip-DiPaula-OSU-bootcamp-hwk4/';
+})
+
+function updateHighScores(alias, score, scoreList) {
+    /* 
+    score entry object: stores alias and score
+    list of score entry objects
+    create new score entry
+    sort score entry list by score value
+    append list to document
+
+    */
+
+    var scoreEntry = document.createElement("li");
+    scoreEntry.textContent = alias + " - " + score;
+    var scores = document.getElementById("highScores");
+
+    scores.appendChild(scoreEntry);
+    scoreEntry.setAttribute("style", " color:white; background: #666666; padding: 5px; margin-left: 35px;");
+}
