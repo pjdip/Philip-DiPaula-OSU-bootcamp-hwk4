@@ -1,0 +1,55 @@
+#hsLink {
+    float: left;
+}
+
+#timer {
+    float: right;
+}
+
+.container {
+
+}
+
+#startSection {
+    text-align: center;
+}
+
+#question1 {
+    text-align: left;
+}
+
+#question2 {
+    text-align: left;
+}
+
+#question3 {
+    text-align: left;
+}
+
+#question4 {
+    text-align: left;
+}
+
+.questions {
+
+}
+
+.answers {
+
+}
+
+#endSection {
+
+}
+
+h1 {
+    size: 24px;
+}
+
+h2 {
+    size: 20px;
+}
+
+p {
+    size: 16px;
+}

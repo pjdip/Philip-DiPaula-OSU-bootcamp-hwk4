@@ -16,6 +16,7 @@ var scoreList = [];
 
 
 document.getElementById("start").addEventListener("click", function() {
+    document.getElementById("startSection").setAttribute("style", "display:none;")
     /* 
     hide startSection
     reveal question1
@@ -24,6 +25,7 @@ document.getElementById("start").addEventListener("click", function() {
 })
 
 document.getElementById("answers1").addEventListener("click", function(event) {
+    document.getElementById("question1").setAttribute("style", "display:none;")
     /* 
     hide question1
     reveal quesiton2
@@ -33,6 +35,7 @@ document.getElementById("answers1").addEventListener("click", function(event) {
 });
 
 document.getElementById("answers2").addEventListener("click", function(event) {
+    document.getElementById("question2").setAttribute("style", "display:none;")
     /* 
     hide question2
     reveal quesiton3
@@ -42,6 +45,7 @@ document.getElementById("answers2").addEventListener("click", function(event) {
 });
 
 document.getElementById("answers3").addEventListener("click", function(event) {
+    document.getElementById("question3").setAttribute("style", "display:none;")
     /* 
     hide question3
     reveal quesiton4
@@ -51,6 +55,7 @@ document.getElementById("answers3").addEventListener("click", function(event) {
 });
 
 document.getElementById("answers4").addEventListener("click", function(event) {
+    document.getElementById("question4").setAttribute("style", "display:none;")
     /* 
     hide question4
     reveal endSection
