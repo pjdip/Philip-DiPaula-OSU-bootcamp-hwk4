@@ -3,6 +3,7 @@
 
 displaying elements:
 http://thenewcode.com/304/Four-Ways-to-Make-Elements-Disappear-and-Reappear
+https://developer.mozilla.org/en-US/docs/Web/CSS/display
 
 event delegation:
 https://davidwalsh.name/event-delegate

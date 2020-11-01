@@ -6,50 +6,95 @@
     float: right;
 }
 
-.container {
+header {
+    margin-bottom: 10px;
+}
 
+.clearfix:after {
+    content: " ";
+    display: block;
+    clear: both;
+}
+
+.container {
+    clear: both;
 }
 
 #startSection {
     text-align: center;
 }
 
+#start {
+    margin-top: 10px;
+}
+
 #question1 {
+
     text-align: left;
 }
 
 #question2 {
+
     text-align: left;
 }
 
 #question3 {
+
     text-align: left;
 }
 
 #question4 {
+
     text-align: left;
 }
 
-.questions {
+#endSection {
+    text-align: left;
+    margin-left: 40%;
+}
 
+.question {
+    text-align: left;
+    margin-left: 40%;
+}
+
+.questions {
+    margin-bottom: 4px;
 }
 
 .answers {
-
+    margin-bottom: 2px;
 }
 
-#endSection {
+.hidden {
+    display: none;
+}
 
+.revealed {
+    display: inline-block;
 }
 
 h1 {
-    size: 24px;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+
 }
 
 h2 {
-    size: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 p {
     size: 16px;
+}
+
+button {
+    display: inline-block;
+    background-color: purple;
+    color: white;
+    margin-bottom: 2px;
 }

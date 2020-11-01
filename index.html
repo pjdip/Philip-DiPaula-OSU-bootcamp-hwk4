@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="./assets/styles/main.css" />
     </head>
     <body>
-        <header>
+        <header class="clearfix">
             <a id="hsLink" href="./highScorePage.html">View High Scores</a>
             <time id="timer">Time: <span id="time"></span></time>
         </header>
@@ -22,10 +22,10 @@
                 <button id="start">Start Quiz</button>
             </section>
 
-            <form id="question1">
+            <form id="question1" class="hidden question">
                 <h2 class="questions">This is the first question</h2>
                 <ol id="answers1" class="answers">
-                    <li id="0" >
+                    <li id="0">
                         <button>answer1</button>
                     </li>
                     <li id="1">
@@ -40,10 +40,10 @@
                 </ol>
             </form>
 
-            <form id="question2">
+            <form id="question2" class="hidden question">
                 <h2 class="questions">This is the second question</h2>
                 <ol id="answers2" class="answers">
-                    <li id="0" >
+                    <li id="0">
                         <button>answer1</button>
                     </li>
                     <li id="1">
@@ -60,10 +60,10 @@
                 <p id="incorrect1">Incorrect :(</p>
             </form>
 
-            <form id="question3">
-                <h2 class="questions">This is the second question</h2>
+            <form id="question3" class="hidden question">
+                <h2 class="questions">This is the third question</h2>
                 <ol id="answers3" class="answers">
-                    <li id="0" >
+                    <li id="0">
                         <button>answer1</button>
                     </li>
                     <li id="1">
@@ -80,10 +80,10 @@
                 <p id="incorrect2">Incorrect :(</p>
             </form>
 
-            <form id="question4">
-                <h2 class="questions">This is the second question</h2>
+            <form id="question4" class="hidden question">
+                <h2 class="questions">This is the fourth question</h2>
                 <ol id="answers4" class="answers">
-                    <li id="0" >
+                    <li id="0">
                         <button>answer1</button>
                     </li>
                     <li id="1">
@@ -100,8 +100,8 @@
                 <p id="incorrect3">Incorrect :(</p>
             </form>
 
-            <section id="endSection">
-                <h2>Quiz Over</h2>
+            <section id="endSection" class="hidden">
+                <h1>Quiz Over</h1>
                 <p>Final Score: <span id="score"></span></p>
                 <form>
                     <input id="initials" placeholder="enter initials/alias here" />
@@ -111,6 +111,10 @@
                 <p id="incorrect4">Incorrect :(</p>
             </section>
         </main>
+        <script src="./assets/script.js"></script>
+    </body>
+</html>
+
 <!--         PseudoCode:
 
 
@@ -159,6 +163,3 @@
 
         bonus: multiple question types: true/false and multiple choice -->
 
-        <script src="./assets/script.js"></script>
-    </body>
-</html>
