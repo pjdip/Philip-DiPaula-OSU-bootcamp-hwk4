@@ -13,6 +13,29 @@ display score
 bonus: multiple question types: true/false and multiple choice */
 
 var scoreList = [];
+var secondsLeft = 10;
+var timeEl = document.getElementById("time");
+timeEl.textContent = 0;
+
+function setTime() {
+    var timeInterval = setInterval(function() {
+        timeEl.textContent = secondsLeft;
+        secondsLeft--;
+
+        if (secondsLeft === 0) {
+            timeEl.textContent = secondsLeft;
+            var finalTime = 0;
+            clearInterval(timeInterval);
+            hide("question1");
+            hide("question2");
+            hide("question3");
+            hide("question4");
+            reveal("endSection");
+            alert("sorry, you ran out of time");
+        }
+    }, 1000);
+}
+
 
 /* Hiding/revealing */
 function hide(visible) {
@@ -29,9 +52,7 @@ document.getElementById("start").addEventListener("click", function(event) {
     event.preventDefault();
     hide("startSection");
     reveal("question1");
-    /* 
-    initiate timer
-    */
+    setTime();
 })
 
 document.getElementById("answers1").addEventListener("click", function(event) {
@@ -70,6 +91,7 @@ document.getElementById("answers4").addEventListener("click", function(event) {
     event.preventDefault();
     hide("question4");
     reveal("endSection");
+
     /* 
     adjust timer as needed
     stop timer
