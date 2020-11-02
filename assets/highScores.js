@@ -1,9 +1,5 @@
 var highScoresEl = document.getElementById("highScores");
-
-
-init();
-
-renderScores();
+var scoreList = [];
 
 function init() {
     var retrievedScores = localStorage.getItem("scores");
@@ -23,15 +19,17 @@ function renderScores() {
     }
 }
 
+init();
+
 document.getElementById("return").addEventListener("click", function(event) {
     event.preventDefault();
-    window.location.href='./index.html'
-/*     window.location.href='https://pjdip.github.io/Philip-DiPaula-OSU-bootcamp-hwk4/'; */
+    window.location.href='./index.html';
 });
 
 document.getElementById("clear").addEventListener("click", function(event) {
     event.preventDefault();
-    /* delete high score list items 
+    /*
+    delete high score list items 
     append list to document
     */
 });
