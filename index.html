@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="./assets/styles/main.css" />
     </head>
     <body>
-        <header class="clearfix">
+        <header id="head" class="clearfix">
             <a id="hsLink" href="./highScorePage.html">View High Scores</a>
             <time id="timer">Time: <span id="time"></span></time>
         </header>
@@ -105,6 +105,14 @@
 
             <p id="correct" class="hidden" style="text-align: center;">Correct!</p>
             <p id="incorrect" class="hidden" style="text-align: center;">Incorrect :(</p>
+
+            <section id="scorePage" class="hidden">
+                <h1>High Scores</h1>
+                <ol id="highScores"></ol>
+                <br>
+                <button id="return">Return</button>
+                <button id="clear">Clear Scores</button>
+            </section>
 
         </main>
         <script src="./assets/script.js"></script>

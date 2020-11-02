@@ -1,11 +1,21 @@
 var timeEl = document.getElementById("time");
 var scoreEl = document.getElementById("score");
 var aliasInput = document.getElementById("initials");
-/* timeEl.textContent = 0; */
+var highScoresEl = document.getElementById("highScores");
+timeEl.textContent = 0;
 
 var secondsLeft = 75;
 var finalTime;
 var scoreList = [];
+
+init();
+
+class HighScore {
+    constructor(initials, points) {
+        this.initials = initials;
+        this.points = points;
+    }
+}
 
 function hide(visible) {
     document.getElementById(visible).classList.remove("revealed");
@@ -17,10 +27,7 @@ function reveal(hidden) {
     document.getElementById(hidden).classList.add("revealed");
 }
 
-document.getElementById("start").addEventListener("click", function(event) {
-    event.preventDefault();
-    hide("startSection");
-    reveal("question1");
+function setTime() {
     var timeInterval = setInterval(function() {
         timeEl.textContent = secondsLeft;
         secondsLeft--;
@@ -46,7 +53,7 @@ document.getElementById("start").addEventListener("click", function(event) {
             reveal("endSection");
         }
     }, 1000);
-});
+}
 
 function answerCheck(evt, ans) {
     if (evt.target.matches("button")) {
@@ -74,6 +81,13 @@ function answerFeedback(accuracy) {
         }
     }, 1000);
 }
+
+document.getElementById("start").addEventListener("click", function(event) {
+    event.preventDefault();
+    hide("startSection");
+    reveal("question1");
+    setTime();
+});
 
 document.getElementById("answers1").addEventListener("click", function(event) {
     event.preventDefault();
@@ -103,18 +117,6 @@ document.getElementById("answers4").addEventListener("click", function(event) {
     answerCheck(event, 0);
 });
 
-class HighScore {
-    constructor(initials, points) {
-        this.initials = initials;
-        this.points = points;
-    }
-}
-
-function storeScores() {
-    var stringifiedScores = JSON.stringify(scoreList);
-    localStorage.setItem("scores", stringifiedScores);
-}
-
 document.getElementById("submit").addEventListener("click", function(event) {
     event.preventDefault();
     var alias = aliasInput.value.trim();
@@ -128,9 +130,53 @@ document.getElementById("submit").addEventListener("click", function(event) {
     scoreList.push(scoreEntry);
     scoreList.sort(function(a,b) {return b.points - a.points});
     storeScores();
-    timeEl.textContent = 0;
+    renderScores();
+    hide("endSection");
+    hide("head");
+    reveal("scorePage");
 
     console.log(scoreList);
 
-    window.location.href='https://pjdip.github.io/Philip-DiPaula-OSU-bootcamp-hwk4/highScorePage.html';
+/*     window.location.href='./highScorePage.html'; */
+/*     window.location.href='https://pjdip.github.io/Philip-DiPaula-OSU-bootcamp-hwk4/highScorePage.html'; */
+});
+
+function storeScores() {
+    var stringifiedScores = JSON.stringify(scoreList);
+    localStorage.setItem("scores", stringifiedScores);
+}
+
+function init() {
+    var retrievedScores = localStorage.getItem("scores");
+    if (retrievedScores !== null) {
+        scoreList = JSON.parse(retrievedScores);
+    }
+    renderScores();
+}
+
+function renderScores() {
+    highScoresEl.innerHTML = "";
+    for (var i = 0; i < scoreList.length; i++) {
+        var li = document.createElement("li");
+        li.textContent = scoreList[i].initials + " - " + scoreList[i].points;
+        li.setAttribute("id", "scoreEntryItem");
+        highScoresEl.appendChild(li);
+    }
+}
+
+document.getElementById("return").addEventListener("click", function(event) {
+    event.preventDefault();
+    timeEl.textContent = 0;
+    reveal("head");
+    reveal("startSection");
+    hide("scorePage");
+/*     window.location.href='./index.html'; */
+/*     window.location.href='https://pjdip.github.io/Philip-DiPaula-OSU-bootcamp-hwk4/'; */
+});
+
+document.getElementById("clear").addEventListener("click", function(event) {
+    event.preventDefault();
+    /* delete high score list items 
+    append list to document
+    */
 });

@@ -32,6 +32,10 @@ header {
     text-align: center;
 }
 
+#scorePage {
+    text-align: center;
+}
+
 #alias {
     margin-top: 3px;
 }
@@ -53,6 +57,7 @@ h1 {
     font-size: 32px;
     font-weight: bold;
     text-align: center;
+    margin-top: 10px;
     margin-bottom: 10px;
 
 }

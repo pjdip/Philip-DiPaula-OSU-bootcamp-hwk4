@@ -25,7 +25,8 @@ function renderScores() {
 
 document.getElementById("return").addEventListener("click", function(event) {
     event.preventDefault();
-    window.location.href='https://pjdip.github.io/Philip-DiPaula-OSU-bootcamp-hwk4/';
+    window.location.href='./index.html'
+/*     window.location.href='https://pjdip.github.io/Philip-DiPaula-OSU-bootcamp-hwk4/'; */
 });
 
 document.getElementById("clear").addEventListener("click", function(event) {
