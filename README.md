@@ -10,3 +10,9 @@ https://davidwalsh.name/event-delegate
 
 list writing to the document:
 https://getbutterfly.com/generate-html-list-from-javascript-array/
+
+array sorting:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects
+

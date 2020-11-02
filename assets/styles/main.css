@@ -32,6 +32,10 @@ header {
     text-align: center;
 }
 
+#alias {
+    margin-top: 3px;
+}
+
 .question {
     text-align: center;
     margin: auto;
