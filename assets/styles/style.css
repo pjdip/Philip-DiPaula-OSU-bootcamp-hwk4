@@ -6,10 +6,6 @@
     float: right;
 }
 
-header {
-    margin-bottom: 10px;
-}
-
 .clearfix:after {
     content: " ";
     display: block;
@@ -21,49 +17,37 @@ header {
     text-align: center;
 }
 
-#start {
-    margin-top: 10px;
-}
-
-#alias {
-    margin-top: 3px;
-}
-
-.questions {
-    margin-bottom: 6px;
-}
-
-.answers {
-    margin-bottom: 4px;
-}
-
 h1 {
     font-size: 32px;
     font-weight: bold;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 15px;
     margin-bottom: 10px;
-
 }
 
 h2 {
     font-size: 28px;
     font-weight: bold;
+    margin-top: 15px;
     margin-bottom: 15px;
 }
 
-li {
-    margin: auto;
-}
-
 p {
-    size: 16px;
+    size: 20px;
 }
 
 button {
     background-color: purple;
     color: white;
     margin-bottom: 4px;
+}
+
+#start {
+    margin-top: 10px;
+}
+
+#alias {
+    margin-top: 4px;
 }
 
 .hidden {
