@@ -21,29 +21,12 @@ header {
     text-align: center;
 }
 
-#startSection {
-    text-align: center;
-}
-
 #start {
     margin-top: 10px;
 }
 
-#endSection {
-    text-align: center;
-}
-
-#scorePage {
-    text-align: center;
-}
-
 #alias {
     margin-top: 3px;
-}
-
-.question {
-    text-align: center;
-    margin: auto;
 }
 
 .questions {
@@ -51,7 +34,7 @@ header {
 }
 
 .answers {
-    margin-bottom: 2px;
+    margin-bottom: 4px;
 }
 
 h1 {
@@ -69,6 +52,10 @@ h2 {
     margin-bottom: 15px;
 }
 
+li {
+    margin: auto;
+}
+
 p {
     size: 16px;
 }
@@ -76,7 +63,7 @@ p {
 button {
     background-color: purple;
     color: white;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
 }
 
 .hidden {

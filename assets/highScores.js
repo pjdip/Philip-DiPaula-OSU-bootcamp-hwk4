@@ -14,7 +14,7 @@ function renderScores() {
     for (var i = 0; i < scoreList.length; i++) {
         var li = document.createElement("li");
         li.textContent = scoreList[i].initials + " - " + scoreList[i].points;
-        li.setAttribute("id", "scoreEntryItem");
+        li.setAttribute("id", i);
         highScoresEl.appendChild(li);
     }
 }
@@ -28,8 +28,11 @@ document.getElementById("return").addEventListener("click", function(event) {
 
 document.getElementById("clear").addEventListener("click", function(event) {
     event.preventDefault();
-    /*
-    delete high score list items 
-    append list to document
-    */
+    localStorage.removeItem("scores");
+    var scoreLen = highScoresEl.childElementCount;
+    for (var child = 0; child < scoreLen; child++) {
+        highScoresEl.removeChild(document.getElementById(child.toString()));
+    } 
+/*     deal with the bubbling and undefined ending time */
+   
 });

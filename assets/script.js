@@ -43,8 +43,10 @@ function answerFeedback(accuracy) {
     }, 1000);
 }
 
-function answerCheck(evt, ans) {
-    if (evt.target.matches("button")) {
+function answerCheck(evt, ans, prevSection, nextSection) {
+    if (evt.target.matches("button") && !evt.target.matches("li")) {
+        hide(prevSection);
+        reveal(nextSection);
         var ansIndex = evt.target.parentElement.getAttribute("id");
         ansID = ans.toString();
         if (ansIndex === ansID) {
@@ -54,6 +56,8 @@ function answerCheck(evt, ans) {
             answerFeedback("incorrect");
             secondsLeft = secondsLeft - 10;
         }
+    } else {
+        return;
     }
 }
 
@@ -73,7 +77,7 @@ document.getElementById("start").addEventListener("click", function(event) {
 
         document.getElementById("answers4").addEventListener("click", function(event) {
             event.preventDefault();
-            if (event.target.matches("button")) {
+            if (event.target.matches("button") && !event.target.matches("li")) {
                 finalTime = secondsLeft;
                 timeEl.textContent = finalTime;
                 scoreEl.textContent = finalTime;
@@ -96,30 +100,22 @@ document.getElementById("start").addEventListener("click", function(event) {
 
 document.getElementById("answers1").addEventListener("click", function(event) {
     event.preventDefault();
-    hide("question1");
-    reveal("question2");
-    answerCheck(event, 2);
+    answerCheck(event, 2, "question1", "question2");
 });
 
 document.getElementById("answers2").addEventListener("click", function(event) {
     event.preventDefault();
-    hide("question2");
-    reveal("question3");
-    answerCheck(event, 2);
+    answerCheck(event, 2, "question2", "question3");
 });
 
 document.getElementById("answers3").addEventListener("click", function(event) {
     event.preventDefault();
-    hide("question3");
-    reveal("question4");
-    answerCheck(event, 3);
+    answerCheck(event, 3, "question3", "question4");
 });
 
 document.getElementById("answers4").addEventListener("click", function(event) {
     event.preventDefault();
-    hide("question4");
-    reveal("endSection");
-    answerCheck(event, 0);
+    answerCheck(event, 0, "question4", "endSection");
 });
 
 document.getElementById("submit").addEventListener("click", function(event) {
