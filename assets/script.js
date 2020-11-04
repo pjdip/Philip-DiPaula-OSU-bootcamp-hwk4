@@ -31,6 +31,15 @@ class Question {
     }
 }
 
+const q1 = new Question("Commonly used data types include ALL of the following EXCEPT:", "strings", "booleans", "alerts", "numbers", "ans2");
+const q2 = new Question("The condition of an if/else statement is enclosed within:", "quotes", "curly brackets", "parenthesis", "square brackets", "ans2");
+const q3 = new Question("Arrays in JavaScript can be used to store:", "numbers and strings", "other arrays", "objects", "all of the above", "ans3");
+const q4 = new Question("String values must be enclosed within ____ when being assigned to variables.", "quotes", "curly brackets", "parenthesis", "commas", "ans1");
+
+var questions = [q1, q2, q3, q4];
+
+
+
 function hide(visible) {
     document.getElementById(visible).classList.remove("revealed");
     document.getElementById(visible).classList.add("hidden");
