@@ -20,6 +20,17 @@ class HighScore {
     }
 }
 
+class Question {
+    constuctor(questionText, ans1, ans2, ans3, ans4, correctAns) {
+        this.questionText = questionText;
+        this.ans1 = ans1;
+        this.ans2 = ans2;
+        this.ans3 = ans3;
+        this.ans4 = ans4;
+        this.correctAns = correctAns;
+    }
+}
+
 function hide(visible) {
     document.getElementById(visible).classList.remove("revealed");
     document.getElementById(visible).classList.add("hidden");
