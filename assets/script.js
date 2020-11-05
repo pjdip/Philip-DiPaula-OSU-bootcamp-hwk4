@@ -53,23 +53,6 @@ function reveal(hidden) {
     document.getElementById(hidden).classList.add("revealed");
 }
 
-function dynamicAnswers(qIndex, ansIndex, aList) {
-    var answerListItem = document.createElement("li");
-    answerListItem.setAttribute("id", ansIndex);
-    var answerButton = document.createElement("button");
-    if (ansIndex === 0) {
-        answerButton.textContent = questions[qIndex].ans0;
-    } else if (ansIndex === 1) {
-        answerButton.textContent = questions[qIndex].ans1;
-    } else if (ansIndex === 2) {
-        answerButton.textContent = questions[qIndex].ans2;
-    } else if (ansIndex === 3) {
-        answerButton.textContent = questions[qIndex].ans3;
-    }
-    answerListItem.append(answerButton);
-    aList.append(answerListItem);
-}
-
 document.getElementById("start").addEventListener("click", function(event) {
     event.preventDefault();
     hide("startSection");
@@ -116,9 +99,11 @@ function answerFeedback(accuracy) {
 
 function answerCheck(evt, ans) {
     if (evt.target.matches("button") && !evt.target.matches("li")) {
-        var ansIndex = evt.target.parentElement.getAttribute("id");
-        ansId = ans.toString();
-        if (ansIndex === ansId) {
+        var aIndex = evt.target.parentElement.getAttribute("id");
+/*         ansId = ans.toString();
+        if (ansIndex === ansId) { */
+
+        if (aIndex === ans) {
             answerFeedback("correct");
         }
         else {
@@ -133,8 +118,25 @@ function answerCheck(evt, ans) {
     }
 }
 
+function dynamicAnswers(qIndex, ansIndex, answerList) {
+    var answerListItem = document.createElement("li");
+    answerListItem.setAttribute("id", ansIndex);
+    var answerButton = document.createElement("button");
+    if (ansIndex === 0) {
+        answerButton.textContent = questions[qIndex].ans0;
+    } else if (ansIndex === 1) {
+        answerButton.textContent = questions[qIndex].ans1;
+    } else if (ansIndex === 2) {
+        answerButton.textContent = questions[qIndex].ans2;
+    } else if (ansIndex === 3) {
+        answerButton.textContent = questions[qIndex].ans3;
+    }
+    answerListItem.append(answerButton);
+    answerList.append(answerListItem);
+}
+
 function questionLoop() {
-    for (var i = 0; i < questions.length; i++) {         
+    for (var i = 0; i < questions.length; i++) {     
         var quest = document.createElement("h2");
         quest.textContent = questions[i].questionText;
         formEl.prepend(quest);
@@ -155,6 +157,7 @@ function questionLoop() {
                 answerCheck(event, correctAnswer);
                 if (event.target.matches("button") && !event.target.matches("li")) {
                     finalTime = secondsLeft;
+                    clearInterval(timeInterval);
                     timeEl.textContent = finalTime;
                     scoreEl.textContent = finalTime;
                     reveal("endSection");
@@ -163,6 +166,7 @@ function questionLoop() {
         } else {
             document.getElementById(ansID).addEventListener("click", function(event) {
                 event.preventDefault();
+                console.log(correctAnswer);
                 answerCheck(event, correctAnswer);
             });
         }
