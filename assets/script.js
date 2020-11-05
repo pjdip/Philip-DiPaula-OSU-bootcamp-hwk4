@@ -20,14 +20,30 @@ class HighScore {
     }
 }
 
-function hide(visible) {
-    document.getElementById(visible).classList.remove("revealed");
-    document.getElementById(visible).classList.add("hidden");
+class Question {
+    constructor(questionText, ans0, ans1, ans2, ans3, correctAns) {
+        this.questionText = questionText;
+        this.ans0 = ans0;
+        this.ans1 = ans1;
+        this.ans2 = ans2;
+        this.ans3 = ans3;
+        this.correctAns = correctAns;
+    }
 }
 
-function reveal(hidden) {
-    document.getElementById(hidden).classList.remove("hidden");
-    document.getElementById(hidden).classList.add("revealed");
+var q0 = new Question("Commonly used data types include ALL of the following EXCEPT:", "strings", "booleans", "alerts", "numbers", "2");
+var q1 = new Question("The condition of an if/else statement is enclosed within:", "quotes", "curly brackets", "parenthesis", "square brackets", "2");
+var q2 = new Question("Arrays in JavaScript can be used to store:", "numbers and strings", "other arrays", "objects", "all of the above", "3");
+var q3 = new Question("String values must be enclosed within ____ when being assigned to variables.", "quotes", "curly brackets", "parenthesis", "commas", "0");
+
+function hide(ID) {
+    document.getElementById(ID).classList.remove("revealed");
+    document.getElementById(ID).classList.add("hidden");
+}
+
+function reveal(ID) {
+    document.getElementById(ID).classList.remove("hidden");
+    document.getElementById(ID).classList.add("revealed");
 }
 
 document.getElementById("start").addEventListener("click", function(event) {
