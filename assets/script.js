@@ -6,9 +6,11 @@ var aliasInput = document.getElementById("initials");
 var highScoresEl = document.getElementById("highScores");
 timeEl.textContent = 0;
 
-var answerOptions = 4;
+var numberOfAnswerOptions = 4;
 var secondsLeft = 75;
+var timeInterval;
 var finalTime;
+
 
 var scoreList = [];
 var retrievedScores = localStorage.getItem("scores");
@@ -34,12 +36,22 @@ class Question {
     }
 }
 
-const q0 = new Question("Commonly used data types include ALL of the following EXCEPT:", "strings", "booleans", "alerts", "numbers", "ans2");
-const q1 = new Question("The condition of an if/else statement is enclosed within:", "quotes", "curly brackets", "parenthesis", "square brackets", "ans2");
-const q2 = new Question("Arrays in JavaScript can be used to store:", "numbers and strings", "other arrays", "objects", "all of the above", "ans3");
-const q3 = new Question("String values must be enclosed within ____ when being assigned to variables.", "quotes", "curly brackets", "parenthesis", "commas", "ans0");
+var q0 = new Question("Commonly used data types include ALL of the following EXCEPT:", "strings", "booleans", "alerts", "numbers", "2");
+var q1 = new Question("The condition of an if/else statement is enclosed within:", "quotes", "curly brackets", "parenthesis", "square brackets", "2");
+var q2 = new Question("Arrays in JavaScript can be used to store:", "numbers and strings", "other arrays", "objects", "all of the above", "3");
+var q3 = new Question("String values must be enclosed within ____ when being assigned to variables.", "quotes", "curly brackets", "parenthesis", "commas", "0");
 
 var questions = [q0, q1, q2, q3];
+
+function hide(visible) {
+    document.getElementById(visible).classList.remove("revealed");
+    document.getElementById(visible).classList.add("hidden");
+}
+
+function reveal(hidden) {
+    document.getElementById(hidden).classList.remove("hidden");
+    document.getElementById(hidden).classList.add("revealed");
+}
 
 function dynamicAnswers(qIndex, ansIndex, aList) {
     var answerListItem = document.createElement("li");
@@ -58,146 +70,156 @@ function dynamicAnswers(qIndex, ansIndex, aList) {
     aList.append(answerListItem);
 }
 
-function questionLoop() {
-    for (var i = 0; i < questions.length; i++) {
-        flag = false;
-        while (flag !== true) {
-            var quest = document.createElement("h2");
-            quest.textContent = questions[i].questionText;
-            formEl.prepend(quest);
-    
-            var ansList = document.createElement("ol");
-            ansList.setAttribute("id", "answers");
-            
-            for (var j = 0; j < answerOptions; j++) {
-                dynamicAnswers(i, j, ansList);
-            }
-
-/*             var a0 = document.createElement("li");
-            a0.setAttribute("id", 0);
-            var button0 = document.createElement("button");
-            button0.textContent = questions[i].ans0;
-            a0.append(button0);
-            ansList.append(a0);
-            
-            var a1 = document.createElement("li");
-            a1.setAttribute("id", 1);
-            var button1 = document.createElement("button");
-            button1.textContent = questions[i].ans1;
-            a1.append(button1);
-            ansList.append(a1);
-            
-            var a2 = document.createElement("li");
-            a2.setAttribute("id", 2);
-            var button2 = document.createElement("button");
-            button2.textContent = questions[i].ans2;
-            a2.append(button2);
-            ansList.append(a2);
-            
-            var a3 = document.createElement("li");
-            a3.setAttribute("id", 3);
-            var button3 = document.createElement("button");
-            button3.textContent = questions[i].ans3;
-            a3.append(button3);
-            ansList.append(a3); */
-    
-            formEl.append(ansList);
-    
-    
-    
-            flag = true;
-        }
-    }
-}
-
-function hide(visible) {
-    document.getElementById(visible).classList.remove("revealed");
-    document.getElementById(visible).classList.add("hidden");
-}
-
-function reveal(hidden) {
-    document.getElementById(hidden).classList.remove("hidden");
-    document.getElementById(hidden).classList.add("revealed");
-}
-
 document.getElementById("start").addEventListener("click", function(event) {
     event.preventDefault();
     hide("startSection");
     questionLoop();
     reveal("question");
     timeEl.textContent = secondsLeft;
-    var timeInterval = setInterval(function() {
+/*     var timeInterval = setInterval(function() { */
+    timeInterval = setInterval(function() {
         secondsLeft--;
         timeEl.textContent = secondsLeft;
 
-/*         document.getElementById("answers4").addEventListener("click", function(event) {
+/*         document.getElementById("answers3").addEventListener("click", function(event) {
             event.preventDefault();
             if (event.target.matches("button") && !event.target.matches("li")) {
                 clearInterval(timeInterval);
             }
-        });
+        }); */
 
         if (secondsLeft === 0) {
             finalTime = 0;
             timeEl.textContent = finalTime;
             scoreEl.textContent = finalTime;
             clearInterval(timeInterval);
-            hide("question1");
-            hide("question2");
-            hide("question3");
-            hide("question4");
+            while (formEl.firstChild) {
+                formEl.removeChild(formEl.lastChild);
+            }
             reveal("endSection");
-        } */
+        }
     }, 1000);
 });
 
 function answerFeedback(accuracy) {
     reveal(accuracy);
     var displayTime = 2;
-    var timeInterval1 = setInterval(function() {
+    var feedbackInterval = setInterval(function() {
         displayTime--;
 
         if (displayTime === 0) {
-            clearInterval(timeInterval1);
+            clearInterval(feedbackInterval);
             hide(accuracy);
         }
     }, 1000);
 }
 
-function answerCheck(evt, ans, prevSection, nextSection) {
+function answerCheck(evt, ans) {
     if (evt.target.matches("button") && !evt.target.matches("li")) {
-        hide(prevSection);
-        reveal(nextSection);
         var ansIndex = evt.target.parentElement.getAttribute("id");
-        ansID = ans.toString();
-        if (ansIndex === ansID) {
+        ansId = ans.toString();
+        if (ansIndex === ansId) {
             answerFeedback("correct");
         }
         else {
             answerFeedback("incorrect");
             secondsLeft = secondsLeft - 10;
         }
+        while (formEl.firstChild) {
+            formEl.removeChild(formEl.lastChild);
+        }
     } else {
         return;
     }
 }
 
-/* document.getElementById("answers1").addEventListener("click", function(event) {
+function questionLoop() {
+    for (var i = 0; i < questions.length; i++) {         
+        var quest = document.createElement("h2");
+        quest.textContent = questions[i].questionText;
+        formEl.prepend(quest);
+
+        var correctAnswer = questions[i].correctAns;
+
+        var ansList = document.createElement("ol");
+        var ansID = "answers" + i;
+        ansList.setAttribute("id", ansID);
+        for (var j = 0; j < numberOfAnswerOptions; j++) {
+            dynamicAnswers(i, j, ansList);
+        }
+        formEl.append(ansList);
+
+        if (ansID === "answers3") {
+            document.getElementById(ansID).addEventListener("click", function(event) {
+                event.preventDefault();
+                answerCheck(event, correctAnswer);
+                if (event.target.matches("button") && !event.target.matches("li")) {
+                    finalTime = secondsLeft;
+                    timeEl.textContent = finalTime;
+                    scoreEl.textContent = finalTime;
+                    reveal("endSection");
+                }
+            });
+        } else {
+            document.getElementById(ansID).addEventListener("click", function(event) {
+                event.preventDefault();
+                answerCheck(event, correctAnswer);
+            });
+        }
+
+/*         
+        flag = false;
+        while (flag !== true) {
+            
+            var quest = document.createElement("h2");
+            quest.textContent = questions[i].questionText;
+            formEl.prepend(quest);
+    
+            var ansList = document.createElement("ol");
+            var ansID = "answers" + i;
+            ansList.setAttribute("id", ansID);
+            for (var j = 0; j < numberOfAnswerOptions; j++) {
+                dynamicAnswers(i, j, ansList);
+            }
+            formEl.append(ansList);
+    
+            if (ansID === "answers3") {
+                document.getElementById(ansID).addEventListener("click", function(event) {
+                    event.preventDefault();
+                    flag = answerCheck(event, questions[i].correctAns);
+                    if (event.target.matches("button") && !event.target.matches("li")) {
+                        finalTime = secondsLeft;
+                        timeEl.textContent = finalTime;
+                        scoreEl.textContent = finalTime;
+                        reveal("endSection");
+                    }
+                });
+            } else {
+                document.getElementById(ansID).addEventListener("click", function(event) {
+                    event.preventDefault();
+                    flag = answerCheck(event, questions[i].correctAns);
+                });
+            }    
+        } */
+    }
+}
+
+/* document.getElementById("answers0").addEventListener("click", function(event) {
     event.preventDefault();
     answerCheck(event, 2, "question1", "question2");
 });
 
-document.getElementById("answers2").addEventListener("click", function(event) {
+document.getElementById("answers1").addEventListener("click", function(event) {
     event.preventDefault();
     answerCheck(event, 2, "question2", "question3");
 });
 
-document.getElementById("answers3").addEventListener("click", function(event) {
+document.getElementById("answers2").addEventListener("click", function(event) {
     event.preventDefault();
     answerCheck(event, 3, "question3", "question4");
 });
 
-document.getElementById("answers4").addEventListener("click", function(event) {
+document.getElementById("answers3").addEventListener("click", function(event) {
     event.preventDefault();
     answerCheck(event, 0, "question4", "endSection");
 

@@ -4,6 +4,8 @@ clear:
 https://developer.mozilla.org/en-US/docs/Web/API/Storage/removeItem
 https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
 
+https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+
 displaying elements:
 http://thenewcode.com/304/Four-Ways-to-Make-Elements-Disappear-and-Reappear
 https://developer.mozilla.org/en-US/docs/Web/CSS/display
