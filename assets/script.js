@@ -1,16 +1,13 @@
 var timeEl = document.getElementById("time");
 var scoreEl = document.getElementById("score");
 var formEl = document.querySelector("#question");
-var questionEl = document.getElementsByTagName("h2");
 var aliasInput = document.getElementById("initials");
 var highScoresEl = document.getElementById("highScores");
 timeEl.textContent = 0;
 
-var numberOfAnswerOptions = 4;
 var secondsLeft = 75;
-var timeInterval;
+/* var timeInterval; */
 var finalTime;
-
 
 var scoreList = [];
 var retrievedScores = localStorage.getItem("scores");
@@ -26,7 +23,8 @@ class HighScore {
 }
 
 class Question {
-    constructor(questionText, ans0, ans1, ans2, ans3, correctAns) {
+    constructor(questionNumber, questionText, ans0, ans1, ans2, ans3, correctAns) {
+        this.questionNumber = questionNumber;
         this.questionText = questionText;
         this.ans0 = ans0;
         this.ans1 = ans1;
@@ -36,203 +34,141 @@ class Question {
     }
 }
 
-var q0 = new Question("Commonly used data types include ALL of the following EXCEPT:", "strings", "booleans", "alerts", "numbers", "2");
-var q1 = new Question("The condition of an if/else statement is enclosed within:", "quotes", "curly brackets", "parenthesis", "square brackets", "2");
-var q2 = new Question("Arrays in JavaScript can be used to store:", "numbers and strings", "other arrays", "objects", "all of the above", "3");
-var q3 = new Question("String values must be enclosed within ____ when being assigned to variables.", "quotes", "curly brackets", "parenthesis", "commas", "0");
+var q0 = new Question("0", "Commonly used data types include ALL of the following EXCEPT:", "strings", "booleans", "alerts", "numbers", "2");
+var q1 = new Question("1", "The condition of an if/else statement is enclosed within:", "quotes", "curly brackets", "parenthesis", "square brackets", "2");
+var q2 = new Question("2", "Arrays in JavaScript can be used to store:", "numbers and strings", "other arrays", "objects", "all of the above", "3");
+var q3 = new Question("3", "String values must be enclosed within ____ when being assigned to variables.", "quotes", "curly brackets", "parenthesis", "commas", "0");
 
-var questions = [q0, q1, q2, q3];
-
-function hide(visible) {
-    document.getElementById(visible).classList.remove("revealed");
-    document.getElementById(visible).classList.add("hidden");
+function hide(visibleID) {
+    document.getElementById(visibleID).classList.remove("revealed");
+    document.getElementById(visibleID).classList.add("hidden");
 }
 
-function reveal(hidden) {
-    document.getElementById(hidden).classList.remove("hidden");
-    document.getElementById(hidden).classList.add("revealed");
+function reveal(hiddenID) {
+    document.getElementById(hiddenID).classList.remove("hidden");
+    document.getElementById(hiddenID).classList.add("revealed");
 }
 
-document.getElementById("start").addEventListener("click", function(event) {
-    event.preventDefault();
-    hide("startSection");
-    questionLoop();
-    reveal("question");
-    timeEl.textContent = secondsLeft;
-/*     var timeInterval = setInterval(function() { */
-    timeInterval = setInterval(function() {
-        secondsLeft--;
-        timeEl.textContent = secondsLeft;
+function deleteQuestion() {
+    while (formEl.firstChild) {
+        formEl.removeChild(formEl.lastChild);
+    }
+}
 
-/*         document.getElementById("answers3").addEventListener("click", function(event) {
-            event.preventDefault();
-            if (event.target.matches("button") && !event.target.matches("li")) {
-                clearInterval(timeInterval);
-            }
-        }); */
+function generateQuestion(questionObj) {
+    var quest = document.createElement("h2");
+    quest.textContent = questionObj.questionText;
+    formEl.prepend(quest);
 
-        if (secondsLeft === 0) {
-            finalTime = 0;
-            timeEl.textContent = finalTime;
-            scoreEl.textContent = finalTime;
-            clearInterval(timeInterval);
-            while (formEl.firstChild) {
-                formEl.removeChild(formEl.lastChild);
-            }
-            reveal("endSection");
+    var answerList = document.createElement("ol");
+    var ansID = "answers" + questionObj.questionNumber;
+    answerList.setAttribute("id", ansID);
+
+    for (var j = 0; j < 4; j++) {
+        var answerListItem = document.createElement("li");
+        answerListItem.setAttribute("id", j);
+        var answerButton = document.createElement("button");
+
+        if (j === 0) {
+            answerButton.textContent = questionObj.ans0;
+        } else if (j === 1) {
+            answerButton.textContent = questionObj.ans1;
+        } else if (j === 2) {
+            answerButton.textContent = questionObj.ans2;
+        } else if (j === 3) {
+            answerButton.textContent = questionObj.ans3;
         }
-    }, 1000);
-});
 
-function answerFeedback(accuracy) {
-    reveal(accuracy);
+        answerListItem.append(answerButton);
+        answerList.append(answerListItem);
+    }
+
+    formEl.append(answerList);
+}
+
+function answerFeedback(accuracyID) {
+    reveal(accuracyID);
     var displayTime = 2;
     var feedbackInterval = setInterval(function() {
         displayTime--;
 
         if (displayTime === 0) {
             clearInterval(feedbackInterval);
-            hide(accuracy);
+            hide(accuracyID);
         }
     }, 1000);
 }
 
-function answerCheck(evt, ans) {
+function answerCheck(evt, questionObj) {
     if (evt.target.matches("button") && !evt.target.matches("li")) {
-        var aIndex = evt.target.parentElement.getAttribute("id");
-/*         ansId = ans.toString();
-        if (ansIndex === ansId) { */
+        var ansIndex = evt.target.parentElement.getAttribute("id");
 
-        if (aIndex === ans) {
+        if (ansIndex === questionObj.correctAns) {
             answerFeedback("correct");
-        }
-        else {
+        } else {
             answerFeedback("incorrect");
             secondsLeft = secondsLeft - 10;
         }
-        while (formEl.firstChild) {
-            formEl.removeChild(formEl.lastChild);
-        }
+
+        deleteQuestion();
+
     } else {
         return;
     }
 }
 
-function dynamicAnswers(qIndex, ansIndex, answerList) {
-    var answerListItem = document.createElement("li");
-    answerListItem.setAttribute("id", ansIndex);
-    var answerButton = document.createElement("button");
-    if (ansIndex === 0) {
-        answerButton.textContent = questions[qIndex].ans0;
-    } else if (ansIndex === 1) {
-        answerButton.textContent = questions[qIndex].ans1;
-    } else if (ansIndex === 2) {
-        answerButton.textContent = questions[qIndex].ans2;
-    } else if (ansIndex === 3) {
-        answerButton.textContent = questions[qIndex].ans3;
-    }
-    answerListItem.append(answerButton);
-    answerList.append(answerListItem);
-}
+document.getElementById("start").addEventListener("click", function(event) {
+    event.preventDefault();
+    hide("startSection");
 
-function questionLoop() {
-    for (var i = 0; i < questions.length; i++) {     
-        var quest = document.createElement("h2");
-        quest.textContent = questions[i].questionText;
-        formEl.prepend(quest);
+    timeEl.textContent = secondsLeft;
+    var timeInterval = setInterval(function() {
+        secondsLeft--;
+        timeEl.textContent = secondsLeft;
 
-        var correctAnswer = questions[i].correctAns;
-
-        var ansList = document.createElement("ol");
-        var ansID = "answers" + i;
-        ansList.setAttribute("id", ansID);
-        for (var j = 0; j < numberOfAnswerOptions; j++) {
-            dynamicAnswers(i, j, ansList);
+        if (secondsLeft === 0) {
+            finalTime = 0;
+            timeEl.textContent = finalTime;
+            scoreEl.textContent = finalTime;
+            clearInterval(timeInterval);
+            deleteQuestion();
+            reveal("endSection");
         }
-        formEl.append(ansList);
+    }, 1000);
 
-        if (ansID === "answers3") {
-            document.getElementById(ansID).addEventListener("click", function(event) {
-                event.preventDefault();
-                answerCheck(event, correctAnswer);
-                if (event.target.matches("button") && !event.target.matches("li")) {
-                    finalTime = secondsLeft;
-                    clearInterval(timeInterval);
-                    timeEl.textContent = finalTime;
-                    scoreEl.textContent = finalTime;
-                    reveal("endSection");
-                }
-            });
-        } else {
-            document.getElementById(ansID).addEventListener("click", function(event) {
-                event.preventDefault();
-                console.log(correctAnswer);
-                answerCheck(event, correctAnswer);
-            });
-        }
+    generateQuestion(q0);
 
-/*         
-        flag = false;
-        while (flag !== true) {
-            
-            var quest = document.createElement("h2");
-            quest.textContent = questions[i].questionText;
-            formEl.prepend(quest);
-    
-            var ansList = document.createElement("ol");
-            var ansID = "answers" + i;
-            ansList.setAttribute("id", ansID);
-            for (var j = 0; j < numberOfAnswerOptions; j++) {
-                dynamicAnswers(i, j, ansList);
-            }
-            formEl.append(ansList);
-    
-            if (ansID === "answers3") {
-                document.getElementById(ansID).addEventListener("click", function(event) {
+    document.getElementById("answers0").addEventListener("click", function(event) {
+        event.preventDefault();
+        answerCheck(event, q0);
+        generateQuestion(q1);
+        
+        document.getElementById("answers1").addEventListener("click", function(event) {
+            event.preventDefault();
+            answerCheck(event, q1);
+            generateQuestion(q2);
+
+            document.getElementById("answers2").addEventListener("click", function(event) {
+                event.preventDefault();
+                answerCheck(event, q2);
+                generateQuestion(q3);
+
+                document.getElementById("answers3").addEventListener("click", function(event) {
                     event.preventDefault();
-                    flag = answerCheck(event, questions[i].correctAns);
+                    answerCheck(event, q3);
+                
                     if (event.target.matches("button") && !event.target.matches("li")) {
                         finalTime = secondsLeft;
+                        clearInterval(timeInterval);
                         timeEl.textContent = finalTime;
                         scoreEl.textContent = finalTime;
                         reveal("endSection");
                     }
                 });
-            } else {
-                document.getElementById(ansID).addEventListener("click", function(event) {
-                    event.preventDefault();
-                    flag = answerCheck(event, questions[i].correctAns);
-                });
-            }    
-        } */
-    }
-}
-
-/* document.getElementById("answers0").addEventListener("click", function(event) {
-    event.preventDefault();
-    answerCheck(event, 2, "question1", "question2");
+            });
+        });
+    });
 });
-
-document.getElementById("answers1").addEventListener("click", function(event) {
-    event.preventDefault();
-    answerCheck(event, 2, "question2", "question3");
-});
-
-document.getElementById("answers2").addEventListener("click", function(event) {
-    event.preventDefault();
-    answerCheck(event, 3, "question3", "question4");
-});
-
-document.getElementById("answers3").addEventListener("click", function(event) {
-    event.preventDefault();
-    answerCheck(event, 0, "question4", "endSection");
-
-    if (event.target.matches("button") && !event.target.matches("li")) {
-        finalTime = secondsLeft;
-        timeEl.textContent = finalTime;
-        scoreEl.textContent = finalTime;
-    }
-}); */
 
 function storeScores() {
     var stringifiedScores = JSON.stringify(scoreList);
