@@ -6,7 +6,6 @@ var highScoresEl = document.getElementById("highScores");
 timeEl.textContent = 0;
 
 var secondsLeft = 75;
-/* var timeInterval; */
 var finalTime;
 
 var scoreList = [];
@@ -100,21 +99,14 @@ function answerFeedback(accuracyID) {
 }
 
 function answerCheck(evt, questionObj) {
-    if (evt.target.matches("button") && !evt.target.matches("li")) {
-        var ansIndex = evt.target.parentElement.getAttribute("id");
-
-        if (ansIndex === questionObj.correctAns) {
-            answerFeedback("correct");
-        } else {
-            answerFeedback("incorrect");
-            secondsLeft = secondsLeft - 10;
-        }
-
-        deleteQuestion();
-
+    var ansIndex = evt.target.parentElement.getAttribute("id");
+    if (ansIndex === questionObj.correctAns) {
+        answerFeedback("correct");
     } else {
-        return;
+        answerFeedback("incorrect");
+        secondsLeft = secondsLeft - 10;
     }
+    deleteQuestion();
 }
 
 document.getElementById("start").addEventListener("click", function(event) {
@@ -136,37 +128,42 @@ document.getElementById("start").addEventListener("click", function(event) {
         }
     }, 1000);
 
-    generateQuestion(q0);
 
+    generateQuestion(q0);
     document.getElementById("answers0").addEventListener("click", function(event) {
         event.preventDefault();
-        answerCheck(event, q0);
-        generateQuestion(q1);
-        
-        document.getElementById("answers1").addEventListener("click", function(event) {
-            event.preventDefault();
-            answerCheck(event, q1);
-            generateQuestion(q2);
+        if (event.target.matches("button") && !event.target.matches("li")) {
+            answerCheck(event, q0);
 
-            document.getElementById("answers2").addEventListener("click", function(event) {
+            generateQuestion(q1);
+            document.getElementById("answers1").addEventListener("click", function(event) {
                 event.preventDefault();
-                answerCheck(event, q2);
-                generateQuestion(q3);
+                if (event.target.matches("button") && !event.target.matches("li")) {
+                    answerCheck(event, q1);
 
-                document.getElementById("answers3").addEventListener("click", function(event) {
-                    event.preventDefault();
-                    answerCheck(event, q3);
-                
-                    if (event.target.matches("button") && !event.target.matches("li")) {
-                        finalTime = secondsLeft;
-                        clearInterval(timeInterval);
-                        timeEl.textContent = finalTime;
-                        scoreEl.textContent = finalTime;
-                        reveal("endSection");
-                    }
-                });
+                    generateQuestion(q2);                    
+                    document.getElementById("answers2").addEventListener("click", function(event) {
+                        event.preventDefault();
+                        if (event.target.matches("button") && !event.target.matches("li")) {
+                            answerCheck(event, q2);
+
+                            generateQuestion(q3);                            
+                            document.getElementById("answers3").addEventListener("click", function(event) {
+                                event.preventDefault();                            
+                                if (event.target.matches("button") && !event.target.matches("li")) {
+                                    answerCheck(event, q3);
+                                    reveal("endSection");
+                                    finalTime = secondsLeft;
+                                    clearInterval(timeInterval);
+                                    timeEl.textContent = finalTime;
+                                    scoreEl.textContent = finalTime;
+                                }
+                            });
+                        }
+                    });
+                }
             });
-        });
+        }
     });
 });
 
